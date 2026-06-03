@@ -2,7 +2,7 @@ export { asArray, type MaybeArray } from "./array";
 export { chunkWith } from "./chunkWith";
 export { ExtendableDictionary } from "./ExtendableDictionary";
 export { keys } from "./keys";
-export { nonNullable } from "./nonNullable";
+export { nonNullable, nonNullableAsync } from "./nonNullable";
 export { nthArg } from "./nthArg";
 export {
   asObservable,
