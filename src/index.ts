@@ -1,3 +1,5 @@
+import { UnaryFunction } from "rxjs";
+
 export { asArray, type MaybeArray } from "./array";
 export { chunkWith } from "./chunkWith";
 export {
@@ -17,3 +19,5 @@ export {
   type MaybeObservableInputTuple,
 } from "./observable";
 export { property } from "./property";
+
+export type EndoFunction<T> = UnaryFunction<T, T>;
