@@ -18,6 +18,7 @@ export {
   type MaybeObservableInput,
   type MaybeObservableInputTuple,
 } from "./observable";
+export { type MaybePromise } from "./promise";
 export { property } from "./property";
 
 export type EndoFunction<T> = UnaryFunction<T, T>;
