@@ -21,3 +21,8 @@ export {
 export { property } from "./property";
 
 export type EndoFunction<T> = UnaryFunction<T, T>;
+
+export type EndoFunctionOperator<T, U> = UnaryFunction<
+  EndoFunction<T>,
+  EndoFunction<U>
+>;
