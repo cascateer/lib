@@ -5,6 +5,9 @@
     "type": "git",
     "url": "https://github.com/cascateer/lib.git"
   },
+  "scripts": {
+    "patch": "npm version patch && git push origin main --tags"
+  },
   "exports": {
     ".": "./src/index.ts"
   },
