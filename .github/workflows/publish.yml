@@ -1,7 +1,7 @@
 name: Publish to NPM
 
 on:
-  workflow-call:
+  workflow_call:
     secrets: inherit
 
 jobs:
