@@ -1,4 +1,5 @@
 import { UnaryFunction } from "rxjs";
+import { MaybePromise } from "./promise";
 
 export { asArray, type MaybeArray } from "./array";
 export { chunkWith } from "./chunkWith";
@@ -22,6 +23,8 @@ export { type MaybePromise } from "./promise";
 export { property } from "./property";
 
 export type EndoFunction<T> = UnaryFunction<T, T>;
+
+export type AsyncEndoFunction<T> = UnaryFunction<T, MaybePromise<T>>;
 
 export type EndoFunctionOperator<T, U> = UnaryFunction<
   EndoFunction<T>,
