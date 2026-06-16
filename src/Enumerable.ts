@@ -1,5 +1,5 @@
 export class Enumerable<T> extends Array<
-  T extends readonly (infer Index)[] ? Index : never
+  T extends readonly (infer Item)[] ? Item : never
 > {
   constructor(value: T) {
     super();

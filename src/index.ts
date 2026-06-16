@@ -3,6 +3,7 @@ import { MaybePromise } from "./promise";
 
 export { asArray, type MaybeArray } from "./array";
 export { chunkWith } from "./chunkWith";
+export { createElement } from "./createElement";
 export {
   asEnumerable,
   type Enumerable,

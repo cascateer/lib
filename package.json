@@ -3,7 +3,7 @@
   "version": "1.0.9",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cascateer/lib.git"
+    "url": "git+https://github.com/cascateer/lib.git"
   },
   "scripts": {
     "semver-patch": "npm version patch && git push origin main --tags"
