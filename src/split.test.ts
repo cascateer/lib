@@ -11,7 +11,7 @@ test("split with default separator", () => {
 
 test("empty split", () => {
   const emptyString = "";
-  const separator = "-";
+  const separator = "no matter";
 
   expect(emptyString.split(separator)).toEqual([""]);
   expect(split(emptyString, separator)).toEqual([]);
