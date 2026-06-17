@@ -7,11 +7,11 @@ export const sequence =
   (source) =>
     source.pipe(
       scan(
-        ({ inputs, outputs }, input) => ({
-          inputs: [input],
-          outputs: [predicate([input, ...inputs], outputs)],
+        ({ outputs, inputs }, input) => ({
+          outputs: [predicate((inputs = [input, ...inputs] as const), outputs)],
+          inputs,
         }),
-        { inputs: new Array<Input>(), outputs: new Array<Output>() },
+        { outputs: new Array<Output>(), inputs: new Array<Input>() },
       ),
       map(({ outputs }) => {
         if (!(0 in outputs)) {
