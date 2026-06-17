@@ -22,6 +22,7 @@ export {
 } from "./observable";
 export { type MaybePromise } from "./promise";
 export { property } from "./property";
+export { split } from "./split";
 
 export type EndoFunction<T> = UnaryFunction<T, T>;
 
