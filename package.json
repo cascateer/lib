@@ -11,7 +11,8 @@
   },
   "exports": {
     ".": "./src/index.ts",
-    "./observables": "./src/observables/index.ts"
+    "./observables": "./src/observables/index.ts",
+    "./operators": "./src/observables/index.ts"
   },
   "dependencies": {
     "lodash": "^4.18.1",
