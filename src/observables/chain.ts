@@ -1,6 +1,6 @@
 import { map, OperatorFunction, scan } from "rxjs";
 
-export const sequence =
+export const chain =
   <Input, Output>(
     predicate: (inputs: [Input, ...Input[]], outputs: Output[]) => Output,
   ): OperatorFunction<Input, Output> =>
