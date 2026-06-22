@@ -22,17 +22,17 @@ export class LazyPromise<Args, Result> extends Promise<Result> {
     };
   }
 
-  static concatAll = async <T extends readonly unknown[]>(
+  static async concatAll<T extends readonly unknown[]>(
     inputs: [
       ...{
         [K in keyof T]: LazyPromise<void, T[K]>;
       },
     ],
-  ) => {
+  ) {
     for (const input of inputs) {
       await input.run();
     }
 
     return Promise.all(inputs);
-  };
+  }
 }
