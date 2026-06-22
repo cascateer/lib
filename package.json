@@ -12,6 +12,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./observables": "./src/observables/index.ts",
+    "./promises": "./src/promises/index.ts",
     "./operators": "./src/observables/index.ts"
   },
   "dependencies": {

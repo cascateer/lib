@@ -1,4 +1,12 @@
-import { AsyncSubject, UnaryFunction } from "rxjs";
+import {
+  AsyncSubject,
+  defer,
+  lastValueFrom,
+  mergeAll,
+  of,
+  toArray,
+  UnaryFunction,
+} from "rxjs";
 import { MaybePromise } from "../promise";
 
 export class LazyPromise<Args, Result> extends Promise<Result> {
@@ -20,5 +28,21 @@ export class LazyPromise<Args, Result> extends Promise<Result> {
 
       return this;
     };
+  }
+
+  static all<T extends readonly unknown[]>(
+    inputs: [
+      ...{
+        [K in keyof T]: UnaryFunction<void, LazyPromise<void, T[K]>>;
+      },
+    ],
+    concurrent = 1,
+  ): Promise<T[number][]> {
+    return lastValueFrom(
+      of(...inputs.map((input) => defer(async () => input()))).pipe(
+        mergeAll(concurrent),
+        toArray(),
+      ),
+    );
   }
 }
