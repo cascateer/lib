@@ -33,13 +33,13 @@ export class LazyPromise<Args, Result> extends Promise<Result> {
   static mergeAll = <T extends readonly unknown[]>(
     inputs: [
       ...{
-        [K in keyof T]: UnaryFunction<void, LazyPromise<void, T[K]>>;
+        [K in keyof T]: LazyPromise<void, T[K]>;
       },
     ],
     concurrent = 1,
   ): Promise<T[number][]> =>
     lastValueFrom(
-      of(...inputs.map((input) => defer(async () => input()))).pipe(
+      of(...inputs.map((input) => defer(async () => input.run()))).pipe(
         mergeAll(concurrent),
         toArray(),
       ),
