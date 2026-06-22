@@ -1,35 +1,46 @@
-import { AsyncSubject, UnaryFunction } from "rxjs";
+import { AsyncSubject } from "rxjs";
 import { MaybePromise } from "../promise";
 
-export class LazyPromise<Args, Result> extends Promise<Result> {
-  private readonly result = new AsyncSubject<MaybePromise<Result>>();
+interface LazyPromisePredicate<Args, Result> {
+  (args: Args): MaybePromise<Result>;
+}
 
-  public readonly run: UnaryFunction<Args, this>;
+interface LazyPromiseInstance<Args, Result> {
+  (predicate: LazyPromisePredicate<Args, Result>): Promise<Result>;
+  run: (args: Args) => void;
+}
 
-  constructor(predicate: UnaryFunction<Args, MaybePromise<Result>>) {
-    const result = new AsyncSubject<MaybePromise<Result>>();
+export class LazyPromise {
+  static fromFunction<Args, Result>(
+    predicate: LazyPromisePredicate<Args, Result>,
+  ) {
+    return (function (
+      predicate: LazyPromisePredicate<Args, Result>,
+    ): LazyPromiseInstance<Args, Result> {
+      const result = new AsyncSubject<MaybePromise<Result>>();
 
-    super((resolve, reject) =>
-      result.subscribe({
-        next: async (result) => resolve(await result),
-        error: reject,
-      }),
-    );
-
-    this.result = result;
-
-    this.run = (args) => {
-      this.result.next(predicate(args));
-      this.result.complete();
-
-      return this;
-    };
+      return Object.assign(
+        (predicate: LazyPromisePredicate<Args, Result>) =>
+          new Promise<Result>((resolve, reject) =>
+            result.subscribe({
+              next: async (result) => resolve(await result),
+              error: reject,
+            }),
+          ),
+        {
+          run: (args: Args) => {
+            result.next(predicate(args));
+            result.complete();
+          },
+        },
+      );
+    })(predicate);
   }
 
   static concatAll = async <T extends readonly unknown[]>(
     inputs: [
       ...{
-        [K in keyof T]: LazyPromise<void, T[K]>;
+        [K in keyof T]: LazyPromiseInstance<void, T[K]>;
       },
     ],
   ) => {
