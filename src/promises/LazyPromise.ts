@@ -1,4 +1,3 @@
-import { partialRight } from "lodash";
 import {
   AsyncSubject,
   defer,
@@ -31,21 +30,18 @@ export class LazyPromise<Args, Result> extends Promise<Result> {
     };
   }
 
-  static mergeAll<T extends readonly unknown[]>(
+  static mergeAll = <T extends readonly unknown[]>(
     inputs: [
       ...{
         [K in keyof T]: UnaryFunction<void, LazyPromise<void, T[K]>>;
       },
     ],
     concurrent = 1,
-  ): Promise<T[number][]> {
-    return lastValueFrom(
+  ): Promise<T[number][]> =>
+    lastValueFrom(
       of(...inputs.map((input) => defer(async () => input()))).pipe(
         mergeAll(concurrent),
         toArray(),
       ),
     );
-  }
-
-  static concatAll = partialRight(this.mergeAll, 1);
 }
