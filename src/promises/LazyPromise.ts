@@ -28,7 +28,7 @@ export class LazyPromise<Args, Result> extends Promise<Result> {
         [K in keyof T]: LazyPromise<void, T[K]>;
       },
     ],
-  ): Promise<T[number][]> => {
+  ) => {
     for (const input of inputs) {
       await input.run();
     }
