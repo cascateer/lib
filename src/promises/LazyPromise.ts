@@ -1,12 +1,4 @@
-import {
-  AsyncSubject,
-  defer,
-  lastValueFrom,
-  mergeAll,
-  of,
-  toArray,
-  UnaryFunction,
-} from "rxjs";
+import { AsyncSubject, UnaryFunction } from "rxjs";
 import { MaybePromise } from "../promise";
 
 export class LazyPromise<Args, Result> extends Promise<Result> {
@@ -30,18 +22,17 @@ export class LazyPromise<Args, Result> extends Promise<Result> {
     };
   }
 
-  static mergeAll = <T extends readonly unknown[]>(
+  static concatAll = async <T extends readonly unknown[]>(
     inputs: [
       ...{
         [K in keyof T]: LazyPromise<void, T[K]>;
       },
     ],
-    concurrent = 1,
-  ): Promise<T[number][]> =>
-    lastValueFrom(
-      of(...inputs.map((input) => defer(async () => input.run()))).pipe(
-        mergeAll(concurrent),
-        toArray(),
-      ),
-    );
+  ): Promise<T[number][]> => {
+    for (const input of inputs) {
+      await input.run();
+    }
+
+    return Promise.all(inputs);
+  };
 }
