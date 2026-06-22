@@ -1,46 +1,46 @@
-import { AsyncSubject } from "rxjs";
+import { AsyncSubject, UnaryFunction } from "rxjs";
 import { MaybePromise } from "../promise";
 
-interface LazyPromisePredicate<Args, Result> {
-  (args: Args): MaybePromise<Result>;
-}
+export class LazyPromise<Args, Result> implements PromiseLike<Result> {
+  private readonly value: Promise<Result>;
 
-interface LazyPromiseInstance<Args, Result> {
-  (predicate: LazyPromisePredicate<Args, Result>): Promise<Result>;
-  run: (args: Args) => void;
-}
+  then<TResult1 = Result, TResult2 = never>(
+    onfulfilled?:
+      | ((value: Result) => TResult1 | PromiseLike<TResult1>)
+      | null
+      | undefined,
+    onrejected?:
+      | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+      | null
+      | undefined,
+  ): PromiseLike<TResult1 | TResult2> {
+    return this.value.then(onfulfilled, onrejected);
+  }
 
-export class LazyPromise {
-  static fromFunction<Args, Result>(
-    predicate: LazyPromisePredicate<Args, Result>,
-  ) {
-    return (function (
-      predicate: LazyPromisePredicate<Args, Result>,
-    ): LazyPromiseInstance<Args, Result> {
-      const result = new AsyncSubject<MaybePromise<Result>>();
+  run: (args: Args) => this;
 
-      return Object.assign(
-        (predicate: LazyPromisePredicate<Args, Result>) =>
-          new Promise<Result>((resolve, reject) =>
-            result.subscribe({
-              next: async (result) => resolve(await result),
-              error: reject,
-            }),
-          ),
-        {
-          run: (args: Args) => {
-            result.next(predicate(args));
-            result.complete();
-          },
-        },
-      );
-    })(predicate);
+  constructor(predicate: UnaryFunction<Args, MaybePromise<Result>>) {
+    const result = new AsyncSubject<MaybePromise<Result>>();
+
+    this.value = new Promise((resolve, reject) =>
+      result.subscribe({
+        next: async (result) => resolve(await result),
+        error: reject,
+      }),
+    );
+
+    this.run = (args) => {
+      result.next(predicate(args));
+      result.complete();
+
+      return this;
+    };
   }
 
   static concatAll = async <T extends readonly unknown[]>(
     inputs: [
       ...{
-        [K in keyof T]: LazyPromiseInstance<void, T[K]>;
+        [K in keyof T]: LazyPromise<void, T[K]>;
       },
     ],
   ) => {
