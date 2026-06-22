@@ -7,12 +7,16 @@ export class LazyPromise<Args, Result> extends Promise<Result> {
   public readonly run: UnaryFunction<Args, this>;
 
   constructor(predicate: UnaryFunction<Args, MaybePromise<Result>>) {
+    const result = new AsyncSubject<MaybePromise<Result>>();
+
     super((resolve, reject) =>
-      this.result.subscribe({
+      result.subscribe({
         next: async (result) => resolve(await result),
         error: reject,
       }),
     );
+
+    this.result = result;
 
     this.run = (args) => {
       this.result.next(predicate(args));
@@ -22,17 +26,17 @@ export class LazyPromise<Args, Result> extends Promise<Result> {
     };
   }
 
-  static async concatAll<T extends readonly unknown[]>(
+  static concatAll = async <T extends readonly unknown[]>(
     inputs: [
       ...{
         [K in keyof T]: LazyPromise<void, T[K]>;
       },
     ],
-  ) {
+  ) => {
     for (const input of inputs) {
       await input.run();
     }
 
     return Promise.all(inputs);
-  }
+  };
 }
