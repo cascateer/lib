@@ -4,7 +4,6 @@ import { MaybePromise } from "./promise";
 export { asArray, type MaybeArray } from "./array";
 export { chunkWith } from "./chunkWith";
 export { createElement } from "./createElement";
-export { dupe } from "./dupe";
 export {
   asEnumerable,
   type Enumerable,
@@ -12,6 +11,7 @@ export {
   type Enumerator,
 } from "./Enumerable";
 export { ExtendableDictionary, type Extend } from "./ExtendableDictionary";
+export { findDupeBy } from "./findDupeBy";
 export { keys } from "./keys";
 export { nonNullable, nonNullableAsync } from "./nonNullable";
 export { nthArg } from "./nthArg";
