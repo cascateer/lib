@@ -1,9 +1,10 @@
-import { UnaryFunction } from "rxjs";
+import { Function1 } from "lodash";
 import { MaybePromise } from "./promise";
 
 export { asArray, type MaybeArray } from "./array";
 export { chunkWith } from "./chunkWith";
 export { createElement } from "./createElement";
+export { dupe } from "./dupe";
 export {
   asEnumerable,
   type Enumerable,
@@ -24,11 +25,11 @@ export { type MaybePromise } from "./promise";
 export { property } from "./property";
 export { split } from "./split";
 
-export type EndoFunction<T> = UnaryFunction<T, T>;
+export type EndoFunction<T> = Function1<T, T>;
 
-export type AsyncEndoFunction<T> = UnaryFunction<T, MaybePromise<T>>;
+export type AsyncEndoFunction<T> = Function1<T, MaybePromise<T>>;
 
-export type EndoFunctionOperator<T, U> = UnaryFunction<
+export type EndoFunctionOperator<T, U> = Function1<
   EndoFunction<T>,
   EndoFunction<U>
 >;
