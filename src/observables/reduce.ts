@@ -2,8 +2,8 @@ import assert from "assert";
 import { map, OperatorFunction, scan } from "rxjs";
 
 export const reduce =
-  <Result, Event>(
-    predicate: (outputs: Result, ...events: [Event, ...Event[]]) => Result,
+  <Event, Result>(
+    predicate: (output: Result, ...events: [Event, ...Event[]]) => Result,
     seed: (event: Event) => Result,
   ): OperatorFunction<Event, Result> =>
   (source) =>
