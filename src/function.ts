@@ -1,7 +1,9 @@
-import { constant, Function1, isFunction } from "lodash";
+import { constant, isFunction } from "lodash";
 
-export type MaybeFunction<Args, Result> = Function1<Args, Result> | Result;
+export type MaybeFunction<Args extends unknown[], Result> =
+  | ((...args: Args) => Result)
+  | Result;
 
-export const asFunction = <Args, Result>(
+export const asFunction = <Args extends unknown[], Result>(
   func: MaybeFunction<Args, Result>,
-): Function1<Args, Result> => (isFunction(func) ? func : constant(func));
+) => (isFunction(func) ? func : constant(func));
