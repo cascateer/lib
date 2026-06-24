@@ -3,8 +3,8 @@ import { map, OperatorFunction, scan } from "rxjs";
 
 export const reduce =
   <Event, Result>(
-    predicate: (output: Result, ...events: [Event, ...Event[]]) => Result,
     seed: (event: Event) => Result,
+    predicate: (output: Result, ...events: [Event, ...Event[]]) => Result,
   ): OperatorFunction<Event, Result> =>
   (source) =>
     source.pipe(
