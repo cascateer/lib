@@ -12,6 +12,7 @@ export {
 } from "./Enumerable";
 export { ExtendableDictionary, type Extend } from "./ExtendableDictionary";
 export { findDupeBy } from "./findDupeBy";
+export { asFunction, type MaybeFunction } from "./function";
 export { keys } from "./keys";
 export { nonNullable, nonNullableAsync } from "./nonNullable";
 export { nthArg } from "./nthArg";
