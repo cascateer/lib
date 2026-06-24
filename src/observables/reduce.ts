@@ -1,4 +1,3 @@
-import assert from "assert";
 import { map, OperatorFunction, scan } from "rxjs";
 
 export const reduce =
@@ -20,5 +19,11 @@ export const reduce =
         }),
         { outputs: new Array<Result>(), events: new Array<Event>() },
       ),
-      map(({ outputs }) => (assert(0 in outputs), outputs[0])),
+      map(({ outputs }) => {
+        if (!(0 in outputs)) {
+          throw new Error();
+        }
+
+        return outputs[0];
+      }),
     );
