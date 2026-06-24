@@ -20,10 +20,10 @@ export const reduce =
         { outputs: new Array<Result>(), events: new Array<Event>() },
       ),
       map(({ outputs }) => {
-        if (!(0 in outputs)) {
-          throw new Error();
+        if (0 in outputs) {
+          return outputs[0];
         }
 
-        return outputs[0];
+        throw new Error();
       }),
     );
