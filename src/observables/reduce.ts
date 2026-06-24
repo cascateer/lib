@@ -1,3 +1,4 @@
+import { thru } from "lodash";
 import { map, OperatorFunction, scan } from "rxjs";
 
 export const reduce =
@@ -8,16 +9,17 @@ export const reduce =
   (source) =>
     source.pipe(
       scan(
-        ({ outputs, events }, event) => ({
-          outputs: [
-            predicate(
-              0 in outputs ? outputs[0] : seed(event),
-              ...(events = [event, ...events] as const),
-            ),
-          ],
-          events,
-        }),
-        { outputs: new Array<Result>(), events: new Array<Event>() },
+        ({ outputs, events: previousEvents }, event) =>
+          thru([event, ...previousEvents] as const, (events) => ({
+            outputs: [
+              0 in outputs ? predicate(outputs[0], ...events) : seed(event),
+            ],
+            events,
+          })),
+        {
+          outputs: new Array<Result>(),
+          events: [...new Array<Event>()] as const,
+        },
       ),
       map(({ outputs }) => {
         if (0 in outputs) {
