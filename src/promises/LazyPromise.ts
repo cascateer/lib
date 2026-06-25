@@ -9,7 +9,7 @@ import {
 import { reduce } from "../observables";
 import { MaybePromise } from "../promise";
 
-export class LazyPromise<Args, Result> implements PromiseLike<Result> {
+export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
   private readonly value: Promise<Result>;
 
   then<TResult1 = Result, TResult2 = never>(
