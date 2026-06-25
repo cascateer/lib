@@ -1,28 +1,34 @@
-import { mergeAll, OperatorFunction, startWith } from "rxjs";
+import { map, mergeAll, OperatorFunction, startWith } from "rxjs";
 import { LazyPromise } from "../promises";
 import { reduce } from "./reduce";
 
-export type ActionsTransform<State, Action> = (
-  state: State,
-  ...actions: Action[]
-) => State;
-
 export const actions =
   <State, Action>(
-    transform: ActionsTransform<State, Action>,
+    transform: (state: State, ...actions: Action[]) => State,
     seed: LazyPromise<void, State>,
-  ): OperatorFunction<LazyPromise<State, Action[]>, State> =>
+  ): OperatorFunction<LazyPromise<State, Action[]>, [Action, ...Action[]]> =>
   (source) =>
     source.pipe(
       startWith(new LazyPromise<State, Action[]>(() => [])),
       reduce(
-        (state, actionCreator) =>
-          state.then((state) =>
-            actionCreator
-              .run(state)
-              .then((actions) => transform(state, ...actions)),
+        (result, actions) =>
+          result.then(({ state }) =>
+            actions.run(state).then(async (actions) => ({
+              state: await transform(state, ...actions),
+              actions,
+            })),
           ),
-        async () => seed.run(),
+        async () => ({
+          state: await seed.run(),
+          actions: new Array<Action>(),
+        }),
       ),
       mergeAll(),
+      map(({ actions }) => {
+        if (0 in actions) {
+          return [actions[0], ...actions.slice(1)];
+        }
+
+        throw new Error();
+      }),
     );

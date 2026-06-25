@@ -25,7 +25,7 @@ export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
     return this.value.then(onfulfilled, onrejected);
   }
 
-  run: (args: Args) => this;
+  run: (args: Args) => Promise<Result>;
 
   constructor(predicate: UnaryFunction<Args, MaybePromise<Result>>) {
     const result = new AsyncSubject<MaybePromise<Result>>();
@@ -41,7 +41,7 @@ export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
       result.next(predicate(args));
       result.complete();
 
-      return this;
+      return this.value;
     };
   }
 
