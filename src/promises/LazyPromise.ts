@@ -1,4 +1,12 @@
-import { AsyncSubject, UnaryFunction } from "rxjs";
+import {
+  AsyncSubject,
+  identity,
+  mergeAll,
+  OperatorFunction,
+  startWith,
+  UnaryFunction,
+} from "rxjs";
+import { reduce } from "../observables";
 import { MaybePromise } from "../promise";
 
 export class LazyPromise<Args, Result> implements PromiseLike<Result> {
@@ -50,4 +58,16 @@ export class LazyPromise<Args, Result> implements PromiseLike<Result> {
 
     return Promise.all(inputs);
   };
+
+  static reduce =
+    <T>(seed: LazyPromise<void, T>): OperatorFunction<LazyPromise<T, T>, T> =>
+    (source) =>
+      source.pipe(
+        startWith(new LazyPromise<T, T>(identity)),
+        reduce(
+          (value, { run }) => value.then(run),
+          async () => seed.run(),
+        ),
+        mergeAll(),
+      );
 }
