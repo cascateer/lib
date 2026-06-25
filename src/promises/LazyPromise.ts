@@ -60,7 +60,7 @@ export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
   };
 
   static reduce =
-    <T>(seed: LazyPromise<void, T>): OperatorFunction<LazyPromise<T, T>, T> =>
+    <T>(seed: LazyPromise<void, T>): OperatorFunction<LazyPromise<T>, T> =>
     (source) =>
       source.pipe(
         startWith(new LazyPromise<T, T>(identity)),
