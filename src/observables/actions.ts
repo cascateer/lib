@@ -2,9 +2,14 @@ import { mergeAll, OperatorFunction, startWith } from "rxjs";
 import { LazyPromise } from "../promises";
 import { reduce } from "./reduce";
 
+export type ActionsTransform<State, Action> = (
+  state: State,
+  ...actions: Action[]
+) => State;
+
 export const actions =
   <State, Action>(
-    transform: (state: State, ...actions: Action[]) => State,
+    transform: ActionsTransform<State, Action>,
     seed: LazyPromise<void, State>,
   ): OperatorFunction<LazyPromise<State, Action[]>, State> =>
   (source) =>
