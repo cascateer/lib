@@ -4,8 +4,8 @@ import { reduce } from "./reduce";
 
 export const actions =
   <State, Action>(
-    seed: LazyPromise<void, State>,
     transform: (state: State, ...actions: Action[]) => State,
+    seed: LazyPromise<void, State>,
   ): OperatorFunction<LazyPromise<State, Action[]>, State> =>
   (source) =>
     source.pipe(
