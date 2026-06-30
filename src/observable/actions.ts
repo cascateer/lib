@@ -1,5 +1,5 @@
 import { map, mergeAll, OperatorFunction, startWith } from "rxjs";
-import { LazyPromise } from "../promises";
+import { LazyPromise } from "../promise";
 import { reduce } from "./reduce";
 
 export const actions =

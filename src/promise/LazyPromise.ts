@@ -6,8 +6,8 @@ import {
   startWith,
   UnaryFunction,
 } from "rxjs";
-import { reduce } from "../observables";
-import { MaybePromise } from "../promise";
+import { MaybePromise } from ".";
+import { reduce } from "../observable";
 
 export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
   private readonly value: Promise<Result>;

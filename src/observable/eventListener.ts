@@ -1,5 +1,5 @@
-import { flatMap } from "@cascateer/lib/observables";
 import { fromEvent, Observable } from "rxjs";
+import { flatMap } from ".";
 
 export const eventListener = <
   T extends Node,
