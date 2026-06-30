@@ -3,7 +3,7 @@ import { isObservable, Observable, ObservableInput, of } from "rxjs";
 export { actions } from "./actions";
 export { eventListener } from "./eventListener";
 export { flatMap } from "./flatMap";
-export { ProxySubject } from "./ProxySubject";
+export { ProxyReplaySubject, ProxySubject } from "./ProxySubject";
 export { reduce } from "./reduce";
 
 export const asObservable = <T>(value: MaybeObservable<T>): Observable<T> =>

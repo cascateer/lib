@@ -2,6 +2,7 @@ import { once } from "lodash";
 import {
   Observable,
   Observer,
+  ReplaySubject,
   Subject,
   UnaryFunction,
   Unsubscribable,
@@ -34,5 +35,11 @@ export class ProxySubject<T, R = T>
     project = once(project);
 
     super((subscriber) => project(target).subscribe(subscriber));
+  }
+}
+
+export class ProxyReplaySubject<T, R = T> extends ProxySubject<T, R> {
+  constructor(project: UnaryFunction<Observable<T>, Observable<R>>) {
+    super(new ReplaySubject(), project);
   }
 }
