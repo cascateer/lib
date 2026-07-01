@@ -13,6 +13,7 @@ export {
 export { ExtendableDictionary, type Extend } from "./ExtendableDictionary";
 export { findDupeBy } from "./findDupeBy";
 export { asFunction, type MaybeFunction } from "./function";
+export { keyMapBy } from "./keyMapBy";
 export { keys } from "./keys";
 export { nonNullable, nonNullableAsync } from "./nonNullable";
 export { nthArg } from "./nthArg";
