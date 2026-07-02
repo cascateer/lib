@@ -6,7 +6,7 @@ export const keyMapBy = <T, K, V>(
   valueIteratee: Function2<T, Map<K, V>, V>,
 ) =>
   collection.reduce(
-    (map, item, index) =>
+    (map, item) =>
       tap(map, (map) => map.set(keyIteratee(item), valueIteratee(item, map))),
     new Map<K, V>(),
   );
