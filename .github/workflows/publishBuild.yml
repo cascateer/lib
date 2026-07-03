@@ -30,7 +30,10 @@ jobs:
             exit 1
           fi
 
-      - name: Build package 📦
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build package
         run: npm run build
 
       - name: Publish to NPM
