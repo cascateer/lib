@@ -10,11 +10,11 @@ export {
   type EnumerableItem,
   type Enumerator,
 } from "./Enumerable";
-export { LazyDictionary, type Extend } from "./ExtendableDictionary";
 export { findDupeBy } from "./findDupeBy";
 export { asFunction, type MaybeFunction } from "./function";
 export { keyMapBy } from "./keyMapBy";
 export { keys } from "./keys";
+export { LazyDictionary, type Extend } from "./LazyDictionary";
 export { nonNullable, nonNullableAsync } from "./nonNullable";
 export { nthArg } from "./nthArg";
 export {
