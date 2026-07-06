@@ -44,9 +44,7 @@ export class LazyPromise<Args, Result = Args> {
     ],
   ) => {
     for (const input of inputs) {
-      try {
-        await input.start();
-      } catch {}
+      await input.start();
     }
 
     return Promise.all(inputs.map(property("result")));
