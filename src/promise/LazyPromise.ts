@@ -9,40 +9,30 @@ import {
 } from "rxjs";
 import { MaybePromise } from ".";
 import { reduce } from "../observable";
+import { property } from "../property";
 
-export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
-  private readonly value: Promise<Result>;
+export class LazyPromise<Args, Result = Args> {
+  private readonly resultSubject = new AsyncSubject<MaybePromise<Result>>();
 
-  then<TResult1 = Result, TResult2 = never>(
-    onfulfilled?:
-      | ((value: Result) => TResult1 | PromiseLike<TResult1>)
-      | null
-      | undefined,
-    onrejected?:
-      | ((reason: any) => TResult2 | PromiseLike<TResult2>)
-      | null
-      | undefined,
-  ): PromiseLike<TResult1 | TResult2> {
-    return this.value.then(onfulfilled, onrejected);
-  }
+  public readonly result = new Promise<Result>((resolve, reject) =>
+    this.resultSubject.subscribe({
+      next: async (result) => resolve(await result),
+      error: reject,
+    }),
+  );
+
+  then = this.result.then;
+  catch = this.result.catch;
+  finally = this.result.finally;
 
   start: (args: Args) => Promise<Result>;
 
   constructor(predicate: UnaryFunction<Args, MaybePromise<Result>>) {
-    const result = new AsyncSubject<MaybePromise<Result>>();
-
-    this.value = new Promise((resolve, reject) =>
-      result.subscribe({
-        next: async (result) => resolve(await result),
-        error: reject,
-      }),
-    );
-
     this.start = once((args) => {
-      result.next(predicate(args));
-      result.complete();
+      this.resultSubject.next(predicate(args));
+      this.resultSubject.complete();
 
-      return this.value;
+      return this.result;
     });
   }
 
@@ -57,7 +47,7 @@ export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
       await input.start();
     }
 
-    return Promise.all(inputs);
+    return Promise.all(inputs.map(property("result")));
   };
 
   static reduce =
