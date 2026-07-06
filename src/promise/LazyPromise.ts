@@ -1,3 +1,4 @@
+import { once } from "lodash";
 import {
   AsyncSubject,
   identity,
@@ -25,7 +26,7 @@ export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
     return this.value.then(onfulfilled, onrejected);
   }
 
-  run: (args: Args) => Promise<Result>;
+  start: (args: Args) => Promise<Result>;
 
   constructor(predicate: UnaryFunction<Args, MaybePromise<Result>>) {
     const result = new AsyncSubject<MaybePromise<Result>>();
@@ -37,12 +38,12 @@ export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
       }),
     );
 
-    this.run = (args) => {
+    this.start = once((args) => {
       result.next(predicate(args));
       result.complete();
 
       return this.value;
-    };
+    });
   }
 
   static concatAll = async <T extends readonly unknown[]>(
@@ -53,7 +54,7 @@ export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
     ],
   ) => {
     for (const input of inputs) {
-      await input.run();
+      await input.start();
     }
 
     return Promise.all(inputs);
@@ -65,8 +66,8 @@ export class LazyPromise<Args, Result = Args> implements PromiseLike<Result> {
       source.pipe(
         startWith(new LazyPromise<T, T>(identity)),
         reduce(
-          (value, { run }) => value.then(run),
-          async () => seed.run(),
+          (value, { start }) => value.then(start),
+          async () => seed.start(),
         ),
         mergeAll(),
       );

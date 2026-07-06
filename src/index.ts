@@ -10,7 +10,7 @@ export {
   type EnumerableItem,
   type Enumerator,
 } from "./Enumerable";
-export { ExtendableDictionary, type Extend } from "./ExtendableDictionary";
+export { LazyDictionary, type Extend } from "./ExtendableDictionary";
 export { findDupeBy } from "./findDupeBy";
 export { asFunction, type MaybeFunction } from "./function";
 export { keyMapBy } from "./keyMapBy";

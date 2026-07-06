@@ -13,13 +13,13 @@ export const actions =
       reduce(
         (result, actions) =>
           result.then(({ state }) =>
-            actions.run(state).then(async (actions) => ({
+            actions.start(state).then(async (actions) => ({
               state: await transform(state, ...actions),
               actions,
             })),
           ),
         async () => ({
-          state: await seed.run(),
+          state: await seed.start(),
           actions: new Array<Action>(),
         }),
       ),

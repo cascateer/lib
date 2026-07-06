@@ -1,21 +1,17 @@
-import { Dictionary, once } from "lodash";
-import { AsyncSubject, lastValueFrom, UnaryFunction } from "rxjs";
+import { Dictionary, identity, tap } from "lodash";
+import { UnaryFunction } from "rxjs";
 import { keys } from "./keys";
+import { LazyPromise } from "./promise";
 
 export type Extend<T, U> = Omit<T, keyof U> & U;
 
-export class ExtendableDictionary<T, U extends Dictionary<T>> {
+export class LazyDictionary<T, U extends Dictionary<T>> {
   constructor(
     public currentValue: U,
-    private value = new AsyncSubject<Dictionary<T>>(),
+    private value = new LazyPromise<Dictionary<T>>(identity),
   ) {}
 
-  complete = once((): U => {
-    this.value.next(this.currentValue);
-    this.value.complete();
-
-    return this.currentValue;
-  });
+  complete = () => tap(this.currentValue, this.value.start);
 
   extend<V extends Dictionary<T>>(
     value: (
@@ -26,24 +22,23 @@ export class ExtendableDictionary<T, U extends Dictionary<T>> {
       property: (constructor: UnaryFunction<Promise<string>, T>) => T;
     }) => V,
   ) {
-    return new ExtendableDictionary<T, Extend<U, V>>(
+    return new LazyDictionary<T, Extend<U, V>>(
       {
         ...this.currentValue,
         ...value(this.currentValue)({
           property: (constructor) => {
             const property = constructor(
-              lastValueFrom(this.value).then(
-                (value) =>
-                  new Promise<string>((resolve, reject) => {
-                    for (const key of keys(value)) {
-                      if (value[key] === property) {
-                        return resolve(key);
-                      }
-                    }
+              new Promise<string>(async (resolve, reject) => {
+                const value = await this.value;
 
-                    reject();
-                  }),
-              ),
+                for (const key of keys(value)) {
+                  if (value[key] === property) {
+                    return resolve(key);
+                  }
+                }
+
+                reject();
+              }),
             );
 
             return property;
