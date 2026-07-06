@@ -2,10 +2,13 @@ import { expect, test } from "vitest";
 import { LazyPromise } from "./LazyPromise";
 
 test("LazyPromise.concatAll rejection", () =>
-  expect(
-    LazyPromise.concatAll([
-      new LazyPromise<void>(() => {
-        throw new Error("fail");
-      }),
-    ]),
-  ).rejects.toThrow("fail"));
+  LazyPromise.concatAll(
+    ["apple" as const, "banana" as const, "tomato" as const].map(
+      (fruit) =>
+        new LazyPromise<void>(() => {
+          if (fruit === "banana") {
+            throw new Error(fruit);
+          }
+        }),
+    ),
+  ).catch((error) => expect(error.message).toEqual("banana")));
