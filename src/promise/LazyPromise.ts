@@ -16,7 +16,13 @@ export class LazyPromise<Args, Result = Args> {
 
   public readonly result = new Promise<Result>((resolve, reject) =>
     this.resultSubject.subscribe({
-      next: async (result) => resolve(await result),
+      next: async (result) => {
+        try {
+          resolve(await result);
+        } catch (error) {
+          reject(error);
+        }
+      },
       error: reject,
     }),
   );
@@ -44,7 +50,9 @@ export class LazyPromise<Args, Result = Args> {
     ],
   ) => {
     for (const input of inputs) {
-      await input.start();
+      try {
+        await input.start();
+      } catch {}
     }
 
     return Promise.all(inputs.map(property("result")));
