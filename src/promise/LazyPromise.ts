@@ -9,7 +9,6 @@ import {
 } from "rxjs";
 import { MaybePromise } from ".";
 import { reduce } from "../observable";
-import { property } from "../property";
 
 export class LazyPromise<Args, Result = Args> {
   private readonly resultSubject = new AsyncSubject<MaybePromise<Result>>();
@@ -27,9 +26,9 @@ export class LazyPromise<Args, Result = Args> {
     }),
   );
 
-  then = this.result.then;
-  catch = this.result.catch;
-  finally = this.result.finally;
+  then = this.result.then.bind(this.result);
+  catch = this.result.catch.bind(this.result);
+  finally = this.result.finally.bind(this.result);
 
   start: (args: Args) => Promise<Result>;
 
@@ -55,7 +54,7 @@ export class LazyPromise<Args, Result = Args> {
       } catch {}
     }
 
-    return Promise.all(inputs.map(property("result")));
+    return Promise.all(inputs);
   };
 
   static reduce =
