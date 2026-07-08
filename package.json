@@ -12,7 +12,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./observable": "./src/observable/index.ts",
-    "./promise": "./src/promise/index.ts"
+    "./promise": "./src/promise/index.ts",
+    "./math": "./src/math/index.ts"
   },
   "dependencies": {
     "lodash": "^4.18.1",
