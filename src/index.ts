@@ -10,6 +10,7 @@ export {
   type EnumerableItem,
   type Enumerator,
 } from "./Enumerable";
+export { envConfig } from "./envConfig";
 export { findDupeBy } from "./findDupeBy";
 export { asFunction, type MaybeFunction } from "./function";
 export { keyMapBy } from "./keyMapBy";

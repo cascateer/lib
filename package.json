@@ -16,6 +16,7 @@
     "./math": "./src/math/index.ts"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "lodash": "^4.18.1",
     "rxjs": "^7.8.2"
   },
