@@ -6,6 +6,6 @@ export const findDupeBy = <T, U>(
 ): T | undefined =>
   items[
     items
-      .map((item) => iteratee(item))
+      .map(iteratee)
       .findIndex((item, index, items) => index !== items.lastIndexOf(item))
   ];
