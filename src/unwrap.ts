@@ -7,12 +7,12 @@ export const unwrap = (text: string, start: string, end: string): string[] => [
     *[Symbol.iterator]() {
       const startMatches = Array.from(
         text.matchAll(new RegExp(RegExp.escape(start), "g")),
-        ({ index }) => ({ index, sign: 1 }),
+        ({ index }) => ({ index, start: true }),
       );
 
       const endMatches = Array.from(
         text.matchAll(new RegExp(RegExp.escape(end), "g")),
-        ({ index }) => ({ index, sign: -1 }),
+        ({ index }) => ({ index, start: false }),
       );
 
       const indexStack = [];
@@ -21,7 +21,7 @@ export const unwrap = (text: string, start: string, end: string): string[] => [
         startMatches.concat(endMatches),
         property("index"),
       )) {
-        if (match.sign > 0) {
+        if (match.start) {
           indexStack.push(match.index);
         } else {
           yield text.slice(
