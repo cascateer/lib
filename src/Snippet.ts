@@ -14,9 +14,9 @@ export class Snippet {
     );
 
     if (path != null) {
-      return (path.startsWith("$.") ? `${get({ $: item }, path)}` : path)
-        .replace(/\//g, "\\/")
-        .replace(new RegExp(pattern, flags), replacement);
+      return (
+        path.startsWith("$.") ? `${get({ $: item }, path)}` : path
+      ).replace(new RegExp(pattern, flags), replacement);
     }
 
     return "";
