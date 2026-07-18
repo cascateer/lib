@@ -10,7 +10,7 @@ export class Snippet {
   static parse = <T>(item: T, predicate: string): string => {
     const [path, pattern = "^$", replacement = "", flags] = split(
       predicate,
-      "/",
+      /(?<!\\)\//,
     );
 
     if (path != null) {
