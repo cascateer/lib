@@ -8,14 +8,20 @@ import { split } from "./split";
  *  */
 export class Snippet {
   static parse = <T>(item: T, predicate: string): string => {
-    const [path, pattern = "^$", replacement = "", flags] = split(
+    const separator = "(?<!\\\\)/";
+    const [value, pattern = "^$", replacement = "", flags] = split(
       predicate,
-      /(?<!\\)\//,
+      new RegExp(separator),
     );
 
-    if (path != null) {
+    if (value != null) {
       return (
-        path.startsWith("$.") ? `${get({ $: item }, path)}` : path
+        value.startsWith("$.")
+          ? `${get({ $: item }, value)}`.replaceAll(
+              new RegExp(separator, "g"),
+              "\\/",
+            )
+          : value
       ).replace(new RegExp(pattern, flags), replacement);
     }
 

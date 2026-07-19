@@ -6,7 +6,7 @@ test("Snippet.parse", () => {
   expect(Snippet.parse({ name: "abacab" }, "$.name/^(a)(ba)/$1")).toEqual(
     "acab",
   );
-  expect(Snippet.parse({ name: "foo / bar" }, "$.name/\\//|/g")).toEqual(
+  expect(Snippet.parse({ name: "foo / bar" }, "$.name/\\\\//|/g")).toEqual(
     "foo | bar",
   );
 });
