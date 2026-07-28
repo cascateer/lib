@@ -21,4 +21,10 @@ test("Snippet.parseAll", () => {
       "${${$.name/(a+)/a/gi}tros/(al|ba)/$1-/g}",
     ),
   ).toEqual("al-ba-tros");
+  expect(
+    Snippet.parseAll(
+      { name: "Shadow Heart (Hp Hoeger & Rusty Egan Remix)" },
+      "${$.name/(?:\((Hp Hoeger & Rusty Egan Remix)\))/$1 /}",
+    ),
+  ).toEqual("Shadow Heart (Hp Hoeger & Rusty Egan Remix )");
 });
