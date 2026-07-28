@@ -6,6 +6,7 @@ export { flatMap } from "./flatMap";
 export { ProxyObservable } from "./ProxyObservable";
 export { ProxyReplaySubject, ProxySubject } from "./ProxySubject";
 export { reduce } from "./reduce";
+export { DerivedSignal, Signal } from "./Signal";
 
 export const asObservable = <T>(value: MaybeObservable<T>): Observable<T> =>
   isObservable(value) ? value : of(value);
