@@ -16,7 +16,7 @@ export { asFunction, type MaybeFunction } from "./function";
 export { keyMapBy } from "./keyMapBy";
 export { keys } from "./keys";
 export { LazyDictionary, type Extend } from "./LazyDictionary";
-export { nonNullable, nonNullableAsync } from "./nonNullable";
+export { nonNullable } from "./nonNullable";
 export { nthArg } from "./nthArg";
 export {
   asObservable,
