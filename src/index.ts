@@ -26,6 +26,7 @@ export {
 } from "./observable";
 export { type MaybePromise } from "./promise";
 export { property } from "./property";
+export { Serializable, Serializer } from "./serializable";
 export { Snippet } from "./Snippet";
 export { split } from "./split";
 
