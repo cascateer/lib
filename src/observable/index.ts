@@ -1,7 +1,7 @@
 import { isObservable, Observable, ObservableInput, of } from "rxjs";
 
-export { actions } from "./actions";
 export { eventListener } from "./eventListener";
+export { exchangeMessages } from "./exchangeMessages";
 export { flatMap } from "./flatMap";
 export { ProxyObservable } from "./ProxyObservable";
 export { ProxyReplaySubject, ProxySubject } from "./ProxySubject";

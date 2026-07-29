@@ -1,6 +1,6 @@
 import { omit } from "lodash";
 import { expect, test } from "vitest";
-import { Serializable, Serializer } from "./serializable";
+import { Serializable, Serializer } from "./Serializable";
 
 test("Serializable", () => {
   interface SquareObject {
@@ -36,7 +36,7 @@ test("Serializable", () => {
 
   expect(JSON.parse(stringifiedSquare).value).toEqual({ a: 24, b: 2 });
   expect(JSON.parse(stringifiedSquare).$ref).toMatch(
-    /serializable.ts#Serializable\/importMap\//,
+    /Serializable.ts#Serializable\/importMap\//,
   );
 
   expect(parsedSquare).toBeInstanceOf(Square);

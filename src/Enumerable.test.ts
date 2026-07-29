@@ -3,10 +3,11 @@ import { Enumerable, Enumerator } from "./Enumerable";
 
 test("enumerator", () => {
   const array = [{ id: 2 }, { id: 3 }, { id: 5 }];
-  const enumerator: Enumerator<typeof array> = (item, index) =>
-    [index, item.id].join("-");
+  const enumerator = new Enumerator<typeof array>((item, index) =>
+    [index, item.id].join("-"),
+  );
 
-  expect(array.map(enumerator)).toEqual(["0-2", "1-3", "2-5"]);
+  expect(enumerator.enumerate(array)).toEqual(["0-2", "1-3", "2-5"]);
 });
 
 test("enumerable", () => {

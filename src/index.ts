@@ -6,9 +6,10 @@ export { chunkWith } from "./chunkWith";
 export { createElement } from "./createElement";
 export {
   asEnumerable,
-  type Enumerable,
+  Enumerable,
+  Enumerator,
   type EnumerableItem,
-  type Enumerator,
+  type EnumeratorOld,
 } from "./Enumerable";
 export { envConfig } from "./envConfig";
 export { findDupeBy } from "./findDupeBy";
@@ -26,7 +27,7 @@ export {
 } from "./observable";
 export { type MaybePromise } from "./promise";
 export { property } from "./property";
-export { Serializable, type Serializer } from "./serializable";
+export { Serializable, type Serializer } from "./Serializable";
 export { Snippet } from "./Snippet";
 export { split } from "./split";
 

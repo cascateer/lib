@@ -1,3 +1,5 @@
+import { nthArg } from "./nthArg";
+
 export class Enumerable<T> extends Array<
   T extends readonly (infer Item)[] ? Item : never
 > {
@@ -13,11 +15,25 @@ export type EnumerableItem<
   Index extends number = number,
 > = Enumerable<T>[Index];
 
-export interface Enumerator<T> {
+export interface EnumeratorOld<T> {
   <Index extends number>(
     item: EnumerableItem<T, Index>,
     index: Index,
   ): PropertyKey;
+}
+
+export class Enumerator<T> {
+  constructor(
+    private predicate: <Index extends number>(
+      item: EnumerableItem<T, Index>,
+      index: Index,
+    ) => PropertyKey = nthArg(1),
+  ) {}
+
+  findIndex = (key: PropertyKey) => (value: T) =>
+    asEnumerable(value).map(this.predicate).indexOf(key);
+
+  enumerate = (value: T) => asEnumerable(value).map(this.predicate);
 }
 
 export const asEnumerable = <T>(value: T) => new Enumerable<T>(value);
