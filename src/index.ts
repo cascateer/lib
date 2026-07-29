@@ -9,7 +9,6 @@ export {
   Enumerable,
   Enumerator,
   type EnumerableItem,
-  type EnumeratorOld,
 } from "./Enumerable";
 export { envConfig } from "./envConfig";
 export { findDupeBy } from "./findDupeBy";
@@ -17,16 +16,8 @@ export { asFunction, type MaybeFunction } from "./function";
 export { keyMapBy } from "./keyMapBy";
 export { keys } from "./keys";
 export { LazyDictionary, type Extend } from "./LazyDictionary";
-export * as math from "./math";
 export { nonNullable } from "./nonNullable";
 export { nthArg } from "./nthArg";
-export {
-  asObservable,
-  type MaybeObservable,
-  type MaybeObservableInput,
-  type MaybeObservableInputTuple,
-} from "./observable";
-export * as promise from "./promise";
 export { property } from "./property";
 export { Serializable, type Serializer } from "./Serializable";
 export { Snippet } from "./Snippet";

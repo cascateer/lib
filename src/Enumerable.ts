@@ -15,13 +15,6 @@ export type EnumerableItem<
   Index extends number = number,
 > = Enumerable<T>[Index];
 
-export interface EnumeratorOld<T> {
-  <Index extends number>(
-    item: EnumerableItem<T, Index>,
-    index: Index,
-  ): PropertyKey;
-}
-
 export class Enumerator<T> {
   constructor(
     private predicate: <Index extends number>(
