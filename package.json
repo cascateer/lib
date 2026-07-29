@@ -8,8 +8,10 @@
   "scripts": {
     "semver-patch": "npm version patch && git push origin main --tags",
     "update": "npm cache clean --force && npx npm-check-updates -u --format time && npm i",
-    "test": "vitest"
+    "test": "vitest",
+    "build": "tsc"
   },
+  "main": "./dist/index.js",
   "exports": {
     ".": "./src/index.ts",
     "./observable": "./src/observable/index.ts",
