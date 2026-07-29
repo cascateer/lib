@@ -15,6 +15,7 @@
   "exports": {
     ".": {
       "import": "./src/index.ts",
+      "require": "./src/index.ts",
       "types": "./dist/index.d.ts"
     },
     "./observable": "./src/observable/index.ts",
