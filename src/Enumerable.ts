@@ -17,7 +17,7 @@ export type EnumerableItem<
 
 export class Enumerator<T> {
   constructor(
-    private predicate: <Index extends number>(
+    public predicate: <Index extends number>(
       item: EnumerableItem<T, Index>,
       index: Index,
     ) => PropertyKey = nthArg(1),
