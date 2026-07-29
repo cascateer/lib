@@ -1,6 +1,6 @@
 {
   "name": "@cascateer/lib",
-  "version": "1.0.92",
+  "version": "1.0.91",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cascateer/lib.git"
@@ -12,12 +12,27 @@
     "test": "vitest",
     "build": "tsc"
   },
-  "main": "./dist/index.js",
   "exports": {
-    ".": "./src/index.ts",
-    "./observable": "./src/observable/index.ts",
-    "./promise": "./src/promise/index.ts",
-    "./math": "./src/math/index.ts"
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./observable": {
+      "import": "./src/observable/index.js",
+      "require": "./src/observable/index.js",
+      "types": "./src/observable/index.d.ts"
+    },
+    "./promise": {
+      "import": "./src/promise/index.js",
+      "require": "./src/promise/index.js",
+      "types": "./src/promise/index.d.ts"
+    },
+    "./math": {
+      "import": "./src/math/index.js",
+      "require": "./src/math/index.js",
+      "types": "./src/math/index.d.ts"
+    }
   },
   "dependencies": {
     "dotenv": "^17.4.2",

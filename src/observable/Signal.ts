@@ -1,3 +1,6 @@
+import { ProxyObservable } from "@cascateer/lib/observable";
+import { clone, Function1, identity, isEqual, memoize } from "lodash";
+import { distinctUntilChanged, map, Observable } from "rxjs";
 import {
   asEnumerable,
   EndoFunctionOperator,
@@ -5,10 +8,7 @@ import {
   Enumerator,
   nonNullable,
   property,
-} from "@cascateer/lib";
-import { ProxyObservable } from "@cascateer/lib/observable";
-import { clone, Function1, identity, isEqual, memoize } from "lodash";
-import { distinctUntilChanged, map, Observable } from "rxjs";
+} from "..";
 
 export class Signal<D, T> extends ProxyObservable<T> {
   clone(): Signal<D, T> {
