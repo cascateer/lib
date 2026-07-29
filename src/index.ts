@@ -17,6 +17,7 @@ export { asFunction, type MaybeFunction } from "./function";
 export { keyMapBy } from "./keyMapBy";
 export { keys } from "./keys";
 export { LazyDictionary, type Extend } from "./LazyDictionary";
+export * as math from "./math";
 export { nonNullable } from "./nonNullable";
 export { nthArg } from "./nthArg";
 export {
@@ -25,7 +26,7 @@ export {
   type MaybeObservableInput,
   type MaybeObservableInputTuple,
 } from "./observable";
-export { type MaybePromise } from "./promise";
+export * as promise from "./promise";
 export { property } from "./property";
 export { Serializable, type Serializer } from "./Serializable";
 export { Snippet } from "./Snippet";
