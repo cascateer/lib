@@ -5,7 +5,6 @@
     "type": "git",
     "url": "git+https://github.com/cascateer/lib.git"
   },
-  "types": "./dist/index.d.ts",
   "scripts": {
     "semver-patch": "npm version patch && git push origin main --tags",
     "update": "npm cache clean --force && npx npm-check-updates -u --format time && npm i",
