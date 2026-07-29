@@ -13,7 +13,10 @@
   },
   "main": "./dist/index.js",
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./dist/index.d.ts"
+    },
     "./observable": "./src/observable/index.ts",
     "./promise": "./src/promise/index.ts",
     "./math": "./src/math/index.ts"
