@@ -5,6 +5,7 @@
     "type": "git",
     "url": "git+https://github.com/cascateer/lib.git"
   },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "semver-patch": "npm version patch && git push origin main --tags",
     "update": "npm cache clean --force && npx npm-check-updates -u --format time && npm i",
@@ -13,12 +14,7 @@
   },
   "main": "./dist/index.js",
   "exports": {
-    ".": {
-      "import": "./src/index.ts",
-      "require": "./src/index.ts",
-      "types": "./dist/index.d.ts",
-      "node": "./dist/index.js"
-    },
+    ".": "./src/index.ts",
     "./observable": "./src/observable/index.ts",
     "./promise": "./src/promise/index.ts",
     "./math": "./src/math/index.ts"
