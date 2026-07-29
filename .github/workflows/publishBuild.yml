@@ -2,6 +2,9 @@ name: Build package and publish to NPM
 
 on:
   workflow_call:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   publish:
