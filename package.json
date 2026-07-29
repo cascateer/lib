@@ -44,5 +44,8 @@
     "@types/lodash": "^4.17.24",
     "@types/node": "^26.1.2",
     "vitest": "^4.1.10"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
