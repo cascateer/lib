@@ -13,24 +13,24 @@
   },
   "exports": {
     ".": {
-      "import": "./src/index.js",
-      "require": "./src/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./observable": {
-      "import": "./src/observable/index.js",
-      "require": "./src/observable/index.js",
-      "types": "./src/observable/index.d.ts"
+      "import": "./dist/observable/index.js",
+      "require": "./dist/observable/index.js",
+      "types": "./dist/observable/index.d.ts"
     },
     "./promise": {
-      "import": "./src/promise/index.js",
-      "require": "./src/promise/index.js",
-      "types": "./src/promise/index.d.ts"
+      "import": "./dist/promise/index.js",
+      "require": "./dist/promise/index.js",
+      "types": "./dist/promise/index.d.ts"
     },
     "./math": {
-      "import": "./src/math/index.js",
-      "require": "./src/math/index.js",
-      "types": "./src/math/index.d.ts"
+      "import": "./dist/math/index.js",
+      "require": "./dist/math/index.js",
+      "types": "./dist/math/index.d.ts"
     }
   },
   "dependencies": {
