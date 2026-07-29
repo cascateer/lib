@@ -12,26 +12,10 @@
     "build": "tsc"
   },
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./observable": {
-      "import": "./dist/observable/index.js",
-      "require": "./dist/observable/index.js",
-      "types": "./dist/observable/index.d.ts"
-    },
-    "./promise": {
-      "import": "./dist/promise/index.js",
-      "require": "./dist/promise/index.js",
-      "types": "./dist/promise/index.d.ts"
-    },
-    "./math": {
-      "import": "./dist/math/index.js",
-      "require": "./dist/math/index.js",
-      "types": "./dist/math/index.d.ts"
-    }
+    ".": "./src/index.ts",
+    "./observable": "./src/observable/index.ts",
+    "./promise": "./src/promise/index.ts",
+    "./math": "./src/math/index.ts"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
@@ -44,8 +28,5 @@
     "@types/lodash": "^4.17.24",
     "@types/node": "^26.1.2",
     "vitest": "^4.1.10"
-  },
-  "files": [
-    "dist"
-  ]
+  }
 }
