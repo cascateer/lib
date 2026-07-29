@@ -1,6 +1,6 @@
 import { omit } from "lodash";
 import { expect, test } from "vitest";
-import { Serializable, Serializer } from "./Serializable";
+import { Serializable, Serializer } from "./Serializable2";
 
 test("Serializable", () => {
   interface SquareObject {
