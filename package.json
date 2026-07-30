@@ -1,9 +1,9 @@
 {
-  "name": "@cascateer/lib",
+  "name": "@cascateer/lib_old",
   "version": "1.0.102",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cascateer/lib.git"
+    "url": "git+https://github.com/cascateer/lib_old.git"
   },
   "scripts": {
     "semver-patch": "npm version patch && git push origin main --tags",
@@ -31,10 +31,18 @@
       "import": "./dist/math/index.js",
       "require": "./dist/math/index.js",
       "types": "./dist/math/index.d.ts"
+    },
+    "./database": {
+      "import": "./dist/database/index.js",
+      "require": "./dist/database/index.js",
+      "types": "./dist/database/index.d.ts"
     }
   },
   "dependencies": {
     "dotenv": "^17.4.2",
+    "mime-types": "^3.0.2",
+    "object-hash": "^3.0.0",
+    "ora": "^9.4.1",
     "lodash": "^4.18.1",
     "rxjs": "^7.8.2",
     "utility-types": "^3.11.0",
@@ -43,6 +51,8 @@
   "devDependencies": {
     "@types/lodash": "^4.17.24",
     "@types/node": "^26.1.2",
+    "@types/mime-types": "^3.0.1",
+    "@types/object-hash": "^3.0.6",
     "vitest": "^4.1.10"
   },
   "files": [
